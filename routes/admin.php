@@ -48,8 +48,10 @@ Route::group(['prefix' => 'common'], function () {
     Route::get('reports/{report}/export', 'Common\Reports@export')->name('reports.export');
     Route::get('reports/{report}/duplicate', 'Common\Reports@duplicate')->name('reports.duplicate');
     Route::get('reports/{report}/clear', 'Common\Reports@clear')->name('reports.clear');
+    Route::get('reports/by/employee', 'Common\Reports@employee')->name('reports.employee');
     Route::get('reports/fields', 'Common\Reports@fields')->name('reports.fields');
     Route::resource('reports', 'Common\Reports');
+
 });
 
 Route::group(['prefix' => 'auth'], function () {

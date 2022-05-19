@@ -16,6 +16,8 @@ return [
     'transfers'             => 'Transfer|Transfer',
     'transactions'          => 'Transaksi|Transaksi',
     'reports'               => 'Laporan|Laporan',
+    'recap'                 => 'Rekap|Rekap',
+    'employee'              => 'Karyawan|Karywan',
     'settings'              => 'Pengaturan|Pengaturan',
     'categories'            => 'Kategori|Kategori',
     'currencies'            => 'Mata Uang|Mata Uang',

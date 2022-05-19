@@ -136,7 +136,22 @@ class AddAdminItems
         // Reports
         $title = trim(trans_choice('general.reports', 2));
         if ($this->canAccessMenuItem($title, 'read-common-reports')) {
-            $menu->route('reports.index', $title, [], 60, ['icon' => 'fa fa-chart-pie']);
+            // $menu->route('reports.index', $title, [], 60, ['icon' => 'fa fa-chart-pie']);
+
+            $menu->dropdown($title, function ($sub) use ($attr) {
+                $title = trim(trans_choice('general.recap', 2));
+                if ($this->canAccessMenuItem($title, 'read-banking-accounts')) {
+                    $sub->route('reports.index', $title, [], 10, $attr);
+                }
+
+                $title = trim(trans_choice('general.employee', 2));
+                if ($this->canAccessMenuItem($title, 'read-banking-transfers')) {
+                    $sub->route('reports.employee', $title, [], 20, $attr);
+                }
+            }, 50, [
+                'title' => $title,
+                'icon' => 'fa fa-chart-pie',
+            ]);
         }
 
         // Settings

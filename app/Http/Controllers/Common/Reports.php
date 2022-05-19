@@ -8,6 +8,7 @@ use App\Jobs\Common\CreateReport;
 use App\Jobs\Common\DeleteReport;
 use App\Jobs\Common\UpdateReport;
 use App\Models\Common\Report;
+use App\Models\Common\Contact;
 use App\Utilities\Reports as Utility;
 use Illuminate\Support\Facades\Cache;
 
@@ -284,5 +285,38 @@ class Reports extends Controller
             'data' => $data,
             'message' => '',
         ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function employee()
+    {
+        $icons = $categories = [];
+
+        $reports = Report::orderBy('name')->get();
+
+        foreach ($reports as $report) {
+            if (!Utility::canShow($report->class)) {
+                continue;
+            }
+
+            $class = Utility::getClassInstance($report, false);
+
+            if (empty($class)) {
+                continue;
+            }
+
+            $ttl = 3600 * 6; // 6 hours
+
+            $icons[$report->id] = $class->getIcon();
+            $categories[$class->getCategory()][] = $report;
+        }
+
+        $customers = Contact::orderBy('name')->pluck('name', 'id');
+
+        return $this->response('common.reports.employee', compact('categories', 'customers', 'icons'));
     }
 }
